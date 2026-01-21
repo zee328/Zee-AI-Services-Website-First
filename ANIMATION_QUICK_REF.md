@@ -1,6 +1,6 @@
 # 🎬 Animation Quick Reference Card
 
-## Project: Yorkshire Automation Services Website
+## Project: z8e Ai automation Website
 
 **Status**: ✅ Animation Enhancement Complete
 

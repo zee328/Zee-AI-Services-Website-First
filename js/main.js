@@ -1,5 +1,5 @@
 /**
- * Yorkshire Automation Services - Main JavaScript
+ * z8e Ai automation - Main JavaScript
  * Handles interactive features and user interactions
  */
 
@@ -295,7 +295,7 @@ function initGridStagger() {
  * Initialize All Features
  */
 function initializeApp() {
-    console.log('Yorkshire Automation Services - Initializing...');
+    console.log('z8e Ai automation - Initializing...');
     
     initMobileMenu();
     initSmoothScroll();

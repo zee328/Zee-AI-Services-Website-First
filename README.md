@@ -1,11 +1,11 @@
-# Yorkshire Automation Services Website
+# z8e Ai automation Website
 
-A modern, responsive frontend for Yorkshire Automation Services - professional AI and automation solutions.
+A modern, responsive frontend for z8e Ai automation - professional AI and automation solutions.
 
 ## 📋 Project Structure
 
 ```
-yorkshire-automation-services/
+z8e-ai-automation/
 ├── index.html          # Main HTML entry point
 ├── css/
 │   └── styles.css      # Custom supplemental styles
@@ -246,10 +246,10 @@ Feel free to fork, modify, and improve this project.
 
 ## 📞 Support
 
-For questions or issues, contact: support@yorkshireautomation.com
+For questions or issues, contact: support@z8eaiautomation.com
 
 ---
 
 **Version:** 1.0.0  
 **Last Updated:** January 2026  
-**Built with ❤️ for Yorkshire Automation Services**
+**Built with ❤️ for z8e Ai automation**
