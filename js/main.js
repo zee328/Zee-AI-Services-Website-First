@@ -1,6 +1,6 @@
 /**
- * Vision AI Automation - Enhanced JavaScript
- * Premium Futuristic Dark Theme Interactions
+ * Vision AI Automation - Modern SaaS Experience
+ * Advanced Interactions & Smooth Animations
  */
 
 // Mobile Menu Toggle
@@ -12,7 +12,6 @@ function initMobileMenu() {
     menuBtn.addEventListener('click', () => {
         const isHidden = mobileMenu.classList.toggle('hidden');
         menuBtn.setAttribute('aria-expanded', !isHidden);
-        mobileMenu.setAttribute('aria-hidden', isHidden);
     });
 
     mobileMenu.querySelectorAll('a').forEach(link => {
@@ -25,7 +24,7 @@ function initMobileMenu() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
             mobileMenu.classList.add('hidden');
-            menuBtn.focus();
+            menuBtn.setAttribute('aria-expanded', 'false');
         }
     });
 }
@@ -49,13 +48,23 @@ function initSmoothScroll() {
     });
 }
 
-// Navbar Scroll Effect
+// Navbar Scroll Effect - Enhanced for SaaS
 function initNavbarScroll() {
     const nav = document.querySelector('nav');
     if (!nav) return;
+    
+    let lastScroll = 0;
     window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.pageYOffset > 50);
-    });
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    }, { passive: true });
 }
 
 // Scroll Reveal Animations
@@ -111,25 +120,28 @@ function initContactForm() {
 
         // Submit
         submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Sending...';
-        showMessage(msgDiv, 'Sending your message...', 'loading');
+        submitBtn.innerHTML = 'Sending to WhatsApp...';
+        showMessage(msgDiv, 'Sending your message to WhatsApp...', 'loading');
 
         try {
-            const mailto = `mailto:contact@visionaiautomation.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
-                `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\n\nMessage:\n${data.message}`
-            )}`;
+            // Format message for WhatsApp
+            const whatsappMessage = `*New Contact Form Submission*\n\n*Name:* ${data.name}\n*Email:* ${data.email}\n*Phone:* ${data.phone || 'N/A'}\n*Subject:* ${data.subject}\n\n*Message:*\n${data.message}`;
             
-            window.location.href = mailto;
+            // Create WhatsApp link
+            const whatsappLink = `https://wa.me/447733830503?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Open WhatsApp in new window
+            window.open(whatsappLink, '_blank');
             
             setTimeout(() => {
-                showMessage(msgDiv, '✓ Message sent successfully! We\'ll get back to you soon.', 'success');
+                showMessage(msgDiv, '✓ Message sent to WhatsApp! We\'ll respond shortly.', 'success');
                 form.reset();
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Send Message';
                 setTimeout(() => msgDiv.style.display = 'none', 5000);
             }, 1000);
         } catch (error) {
-            showMessage(msgDiv, 'Error sending message. Please email us directly at contact@visionaiautomation.com', 'error');
+            showMessage(msgDiv, 'Error sending message. Please contact us at +44 7733 830503 on WhatsApp.', 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'Send Message';
         }
