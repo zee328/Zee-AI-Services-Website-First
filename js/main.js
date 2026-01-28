@@ -1,62 +1,47 @@
 /**
- * z8e Ai automation - Main JavaScript
- * Handles interactive features and user interactions
+ * Vision AI Automation - Enhanced JavaScript
+ * Premium Futuristic Dark Theme Interactions
  */
 
-/**
- * Mobile Menu Toggle
- */
+// Mobile Menu Toggle
 function initMobileMenu() {
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-
     if (!menuBtn || !mobileMenu) return;
 
     menuBtn.addEventListener('click', () => {
         const isHidden = mobileMenu.classList.toggle('hidden');
-        // Update ARIA attributes for accessibility
         menuBtn.setAttribute('aria-expanded', !isHidden);
         mobileMenu.setAttribute('aria-hidden', isHidden);
     });
 
-    // Close menu when a link is clicked
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
+    mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
             menuBtn.setAttribute('aria-expanded', 'false');
-            mobileMenu.setAttribute('aria-hidden', 'true');
         });
     });
 
-    // Close menu on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
             mobileMenu.classList.add('hidden');
-            menuBtn.setAttribute('aria-expanded', 'false');
-            mobileMenu.setAttribute('aria-hidden', 'true');
             menuBtn.focus();
         }
     });
 }
 
-/**
- * Smooth Scroll for Navigation Links
- */
+// Smooth Scroll
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            
-            // Only handle if href is not just "#"
             if (href !== '#') {
                 e.preventDefault();
                 const target = document.querySelector(href);
-                
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
                     });
                 }
             }
@@ -64,255 +49,133 @@ function initSmoothScroll() {
     });
 }
 
-/**
- * Contact Form Handler
- */
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (!contactForm) return;
-
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            subject: formData.get('subject'),
-            message: formData.get('message')
-        };
-
-        // Validate form data
-        if (!validateContactForm(data)) {
-            console.error('Form validation failed');
-            return;
-        }
-
-        // Show success message
-        showSuccessMessage('Message sent successfully! We\'ll be in touch soon.');
-
-        // Reset form
-        contactForm.reset();
-
-        // In a real application, you would send this data to a server
-        console.log('Form data:', data);
+// Navbar Scroll Effect
+function initNavbarScroll() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.pageYOffset > 50);
     });
 }
 
-/**
- * Validate Contact Form Data
- * @param {Object} data - Form data object
- * @returns {boolean} - True if valid, false otherwise
- */
-function validateContactForm(data) {
-    if (!data.name || data.name.trim() === '') {
-        showErrorMessage('Please enter your name.');
-        return false;
-    }
-
-    if (!data.email || !isValidEmail(data.email)) {
-        showErrorMessage('Please enter a valid email address.');
-        return false;
-    }
-
-    if (!data.subject || data.subject.trim() === '') {
-        showErrorMessage('Please enter a subject.');
-        return false;
-    }
-
-    if (!data.message || data.message.trim() === '') {
-        showErrorMessage('Please enter a message.');
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * Validate Email Format
- * @param {string} email - Email address to validate
- * @returns {boolean} - True if valid, false otherwise
- */
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-/**
- * Show Success Message
- * @param {string} message - Success message to display
- */
-function showSuccessMessage(message) {
-    const notification = createNotification(message, 'success');
-    document.body.appendChild(notification);
-
-    // Auto-remove after 4 seconds
-    setTimeout(() => {
-        notification.remove();
-    }, 4000);
-}
-
-/**
- * Show Error Message
- * @param {string} message - Error message to display
- */
-function showErrorMessage(message) {
-    const notification = createNotification(message, 'error');
-    document.body.appendChild(notification);
-
-    // Auto-remove after 4 seconds
-    setTimeout(() => {
-        notification.remove();
-    }, 4000);
-}
-
-/**
- * Create Notification Element
- * @param {string} message - Message text
- * @param {string} type - Type of notification (success or error)
- * @returns {HTMLElement} - Notification element
- */
-function createNotification(message, type) {
-    const notification = document.createElement('div');
-    
-    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-    
-    notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
-    notification.textContent = message;
-    
-    return notification;
-}
-
-/**
- * Add Scroll Animation for Elements
- */
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+// Scroll Reveal Animations
+function initScrollReveal() {
+    const elements = document.querySelectorAll('.scroll-reveal, .glass-card, .service-card, .about-card, .feature-card, .why-card, .contact-info-card');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add appropriate animation class based on element type
-                if (entry.target.classList.contains('service-card')) {
-                    entry.target.classList.add('fade-in-up');
-                } else if (entry.target.classList.contains('about-card')) {
-                    entry.target.classList.add('slide-in-up');
-                } else if (entry.target.classList.contains('why-choose-card')) {
-                    entry.target.classList.add('zoom-in');
-                } else {
-                    entry.target.classList.add('fade-in-up');
-                }
+                entry.target.classList.add('revealed');
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
-
-    // Observe all animatable elements
-    document.querySelectorAll(
-        'article, .service-card, .about-card, .why-choose-card, .contact-info-card, section > .grid > div'
-    ).forEach(el => {
-        observer.observe(el);
-    });
-
-    // Stagger animations for grid items
-    const gridContainers = document.querySelectorAll('section > .grid, section > div > .grid');
-    gridContainers.forEach((container) => {
-        const items = container.querySelectorAll('> div');
-        items.forEach((item, index) => {
-            item.style.setProperty('--animation-order', index);
-        });
-    });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    elements.forEach(el => observer.observe(el));
 }
 
-/**
- * Initialize Navbar Scroll Effect
- */
-function initNavbarScrollEffect() {
-    const navbar = document.querySelector('nav');
-    
-    if (!navbar) return;
+// Contact Form Handler
+function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
 
-    let lastScrollTop = 0;
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('.form-submit');
+        const msgDiv = document.getElementById('formMessage') || createMessageDiv();
+        const data = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            phone: form.phone?.value.trim() || '',
+            subject: form.subject.value.trim(),
+            message: form.message.value.trim()
+        };
 
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-
-        if (scrollTop > 50) {
-            navbar.classList.add('shadow-lg');
-        } else {
-            navbar.classList.remove('shadow-lg');
+        // Validate
+        if (!data.name || data.name.length < 2) {
+            showMessage(msgDiv, 'Please enter your full name.', 'error');
+            return;
+        }
+        if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            showMessage(msgDiv, 'Please enter a valid email address.', 'error');
+            return;
+        }
+        if (!data.subject || data.subject.length < 3) {
+            showMessage(msgDiv, 'Please enter a subject.', 'error');
+            return;
+        }
+        if (!data.message || data.message.length < 10) {
+            showMessage(msgDiv, 'Please enter a message (at least 10 characters).', 'error');
+            return;
         }
 
-        lastScrollTop = scrollTop;
-    });
-}
+        // Submit
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Sending...';
+        showMessage(msgDiv, 'Sending your message...', 'loading');
 
-/**
- * Add Hover Animation Enhancement
- * Adds smooth hover effects to interactive elements
- */
-function initHoverAnimations() {
-    // Add smooth hover effects to all cards
-    const cards = document.querySelectorAll('article, .service-card, .about-card, .why-choose-card, .contact-info-card');
-    
-    cards.forEach(card => {
-        if (!card.classList.contains('card-lift')) {
-            card.classList.add('card-lift');
+        try {
+            const mailto = `mailto:contact@visionaiautomation.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
+                `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\n\nMessage:\n${data.message}`
+            )}`;
+            
+            window.location.href = mailto;
+            
+            setTimeout(() => {
+                showMessage(msgDiv, '✓ Message sent successfully! We\'ll get back to you soon.', 'success');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Send Message';
+                setTimeout(() => msgDiv.style.display = 'none', 5000);
+            }, 1000);
+        } catch (error) {
+            showMessage(msgDiv, 'Error sending message. Please email us directly at contact@visionaiautomation.com', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Send Message';
         }
     });
-
-    // Add smooth transitions to all buttons
-    const buttons = document.querySelectorAll('button:not(.hero-btn-primary):not(.hero-btn-secondary)');
-    
-    buttons.forEach(button => {
-        button.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-    });
 }
 
-/**
- * Add Stagger Effect to Grid Items
- * Creates a cascade effect for grid items on load
- */
-function initGridStagger() {
-    const gridContainers = document.querySelectorAll('.grid');
-    
-    gridContainers.forEach(container => {
-        const items = container.querySelectorAll('> div, > article');
-        items.forEach((item, index) => {
-            if (item.style.animationDelay === '') {
-                item.style.animationDelay = `${index * 0.1}s`;
-            }
-        });
-    });
+function createMessageDiv() {
+    const div = document.createElement('div');
+    div.id = 'formMessage';
+    div.style.display = 'none';
+    document.getElementById('contactForm').appendChild(div);
+    return div;
 }
 
-/**
- * Initialize All Features
- */
-function initializeApp() {
-    console.log('z8e Ai automation - Initializing...');
+function showMessage(div, message, type) {
+    div.textContent = message;
+    div.className = `form-message ${type}`;
+    div.style.display = 'block';
+    if (type === 'error') {
+        setTimeout(() => div.style.display = 'none', 5000);
+    }
+}
+
+// WhatsApp Floating Button
+function initWhatsAppButton() {
+    const btn = document.createElement('a');
+    btn.className = 'whatsapp-float';
+    btn.href = 'https://wa.me/447733830503?text=' + encodeURIComponent('Hello Vision AI Automation, I\'m interested in your services.');
+    btn.target = '_blank';
+    btn.rel = 'noopener noreferrer';
+    btn.setAttribute('aria-label', 'Chat on WhatsApp');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+    document.body.appendChild(btn);
+}
+
+// Initialize All
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('%c🚀 Vision AI Automation', 'color: #00d4ff; font-size: 20px; font-weight: bold;');
+    console.log('%cWebsite loaded successfully!', 'color: #a855f7;');
     
     initMobileMenu();
     initSmoothScroll();
+    initNavbarScroll();
+    initScrollReveal();
     initContactForm();
-    initScrollAnimations();
-    initNavbarScrollEffect();
-    initHoverAnimations();
-    initGridStagger();
-
-    console.log('App initialized successfully!');
-}
-
-/**
- * Wait for DOM to be ready
- */
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-} else {
-    initializeApp();
-}
+    initWhatsAppButton();
+    
+    setTimeout(() => document.body.classList.add('loaded'), 100);
+});
