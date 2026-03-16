@@ -662,6 +662,9 @@ nav a:not(.logo-link):hover::after {
 .service-card:nth-child(6) {
   animation-delay: 0.6s;
 }
+.service-card:nth-child(7) {
+  animation-delay: 0.7s;
+}
 
 /* ============================================
    ABOUT SECTION
