@@ -3,32 +3,31 @@ name: Deploy to Firebase Hosting
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
-on:
-  push:
-    branches:
-      - main
+  on:
+    push:
+        branches:
+              - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+              jobs:
+                deploy:
+                    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+                        steps:
+                              - name: Checkout code
+                                      uses: actions/checkout@v6
 
-            - name: Copy files to public folder
-                  run: |
-                          mkdir -p public/css public/js public/assets
-                                  [ -f index.html ] && cp index.html public/
-                                          [ -d css ] && cp -r css/* public/css/ 2>/dev/null || true
-                                                  [ -d js ] && cp -r js/* public/js/ 2>/dev/null || true
-                                                          [ -d assets ] && cp -r assets/* public/assets/ 2>/dev/null || true
-                                                                  echo "Files copied to public folder"
-
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
-          projectId: vision-ai-automation-e4d28
+                                            - name: Copy files to public folder
+                                                    run: |
+                                                              mkdir -p public/css public/js public/assets
+                                                                        test -f index.html && cp index.html public/ || true
+                                                                                  test -d css && cp -r css/* public/css/ || true
+                                                                                            test -d js && cp -r js/* public/js/ || true
+                                                                                                      test -d assets && cp -r assets/* public/assets/ || true
+                                                                                                      
+                                                                                                            - name: Deploy to Firebase Hosting
+                                                                                                                    uses: FirebaseExtended/action-hosting-deploy@v0
+                                                                                                                            with:
+                                                                                                                                      repoToken: ${{ secrets.GITHUB_TOKEN }}
+                                                                                                                                                firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+                                                                                                                                                          channelId: live
+                                                                                                                                                                    projectId: vision-ai-automation-e4d28
