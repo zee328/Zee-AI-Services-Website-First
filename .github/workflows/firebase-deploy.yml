@@ -11,10 +11,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Copy files to public folder
+        run: |
+          mkdir -p public/css public/js public/assets
+          test -f index.html && cp index.html public/ || true
+          test -d css && cp -r css/* public/css/ || true
+          test -d js && cp -r js/* public/js/ || true
+          test -d assets && cp -r assets/* public/assets/ || true
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0

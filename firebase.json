@@ -1,12 +1,13 @@
 {
-  "hosting": {
-    "public": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      ".github/**",
-      "**/*.md",
-      "*.sh"
-    ]
-  }
+    "hosting": {
+          "public": "public",
+          "ignore": [
+                  "firebase.json",
+                  ".git",
+                  ".gitignore",
+                  "node_modules",
+                  "*.md",
+                  ".DS_Store"
+          ]
+    }
 }
